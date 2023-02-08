@@ -10,11 +10,11 @@ node {
             sh "./mvnw clean install"
         }
         stage("java package") {
-            sh "docker stop demo"
-            sh "docker rmi demo"
+            sh "docker stop eureka-server"
+            sh "docker rmi eureka-server"
         }
         stage("docker image") {
-            def customImage = docker.build("demo", ".")
+            def customImage = docker.build("eureka-server", ".")
         }
     }
 
@@ -30,7 +30,7 @@ node {
         }
 
         stage("Deployment") {
-            sh "docker run -p 8761:8761 demo"
+            sh "docker run -p 8761:8761 eureka-server"
         }
     }
 }
